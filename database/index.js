@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
+const username = process.env.herokuUN;
 const password = process.env.herokuPW;
 // const config = require('../config.js');
 // const password = config.herokuPW;
 // mongoose.connect('mongodb://localhost/fetcher');
-mongoose.connect(`mongodb+srv://arkteck:${password}@cluster0.y9iir.mongodb.net/fetcher?retryWrites=true&w=majority`);
+mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.y9iir.mongodb.net/fetcher?retryWrites=true&w=majority`);
 
 const Promise = require('bluebird');
 
@@ -11,6 +12,7 @@ let repoSchema = mongoose.Schema({
   github_id: {type: Number, unique: true},
   name: String,
   username: String,
+  user_url: String,
   url: String,
   description: String,
   created_at: Date,
@@ -22,7 +24,16 @@ let repoSchema = mongoose.Schema({
   open_issues: Number,
 });
 
+let userSchema = mongoose.Schema({
+  userid: {type: Number, unique: true},
+  username: String,
+  user_url: String,
+  avatar_url: String,
+
+});
+
 let Repo = mongoose.model('Repo', repoSchema);
+let User = mongoose.model('User', userSchema);
 
 let save = (data) => {
 
@@ -32,6 +43,7 @@ let save = (data) => {
     m.github_id = d.id;
     m.name = d.name;
     m.username = d.owner.login;
+    m.user_url = d.owner.url;
     m.url = d.html_url;
     m.description = d.description;
     m.created_at = d.created_at;
@@ -44,7 +56,17 @@ let save = (data) => {
     mongoData.push(m);
   })
 
-  return Repo.insertMany(mongoData, {ordered: false});
+  const userData = {
+    userid = data[0].owner.id;
+    username = data[0].owner.login;
+    user_url = data[0].owner.html_url;
+    avatar_url = data[0].owner.avatar_url;
+  };
+
+  return User.create(userData)
+    .then(() => {
+      return Repo.insertMany(mongoData, {ordered: false});
+    })
 }
 
 let retrieve = (sortBy = 'size', order = -1) => {
