@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/fetcher');
+const config = require('../config.js');
+const password = config.herokuPW;
+
+// mongoose.connect('mongodb://localhost/fetcher');
+mongoose.connect(`mongodb+srv://arkteck:${password}@cluster0.y9iir.mongodb.net/fetcher?retryWrites=true&w=majority`);
 
 const Promise = require('bluebird');
 
