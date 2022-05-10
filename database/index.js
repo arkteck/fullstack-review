@@ -57,10 +57,10 @@ let save = (data) => {
   })
 
   const userData = {
-    userid = data[0].owner.id;
-    username = data[0].owner.login;
-    user_url = data[0].owner.html_url;
-    avatar_url = data[0].owner.avatar_url;
+    userid = data[0].owner.id,
+    username = data[0].owner.login,
+    user_url = data[0].owner.html_url,
+    avatar_url = data[0].owner.avatar_url,
   };
 
   return User.create(userData)
@@ -72,7 +72,7 @@ let save = (data) => {
 let retrieve = (sortBy = 'size', order = -1) => {
   const sort = {}
   sort[sortBy] = order;
-  const promArr = [Repo.estimatedDocumentCount(), Repo.find({}, null, {sort, limit: 25})];
+  const promArr = [User.estimatedDocumentCount(), Repo.estimatedDocumentCount(), Repo.find({}, null, {sort, limit: 25})];
   return Promise.all(promArr);
 
 }

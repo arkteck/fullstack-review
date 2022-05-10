@@ -8,6 +8,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      users: 0,
       count: 0,
       repos: [],
       sortBy: 'size',
@@ -45,7 +46,7 @@ class App extends React.Component {
       method: 'GET',
       dataType: 'json',
       success: data => {
-        this.setState({count: data[0], repos: data[1]});
+        this.setState({users: data[0], count: data[1], repos: data[2]});
       },
       error: (jqxhr, textStatus, errorThrown) => {
         console.log('render ajax error', textStatus)
@@ -54,7 +55,7 @@ class App extends React.Component {
 
     return (<div>
       <h1>Github Fetcher</h1>
-      <RepoList count={this.state.count} repos={this.state.repos} handleClick={this.handleClick} sortBy={this.state.sortBy} order={this.state.order}/>
+      <RepoList count={this.state.count} repos={this.state.repos} handleClick={this.handleClick} sortBy={this.state.sortBy} order={this.state.order} users={this.state.users}/>
       <Search onSearch={this.search.bind(this)}/>
     </div>)
   }
