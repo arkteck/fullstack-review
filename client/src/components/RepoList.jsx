@@ -3,7 +3,7 @@ import React from 'react';
 const RepoList = (props) => (
   <div>
     <h4> Repo List Component </h4>
-    There are {props.count} repos in the databas. Here are the top 25 sorted by {props.sortBy}, {props.order === 1 ? 'ascending' : 'descending'}.
+    There are {props.count} repos in the database. Here are the top 25 sorted by {props.sortBy}, {props.order === 1 ? 'ascending' : 'descending'}.
     <table>
       <thead>
       <tr>
