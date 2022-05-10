@@ -28,6 +28,9 @@ th{
   color: #000;
   text-transform: uppercase;
 }
+th:hover {
+  cursor: pointer;
+}
 td{
   padding: 8px;
   text-align: left;

@@ -9,10 +9,13 @@ class App extends React.Component {
     super(props);
     this.state = {
       count: 0,
-      repos: []
+      repos: [],
+      sortBy: 'size',
+      order: -1,
     }
     this.render = this.render.bind(this);
     this.search = this.search.bind(this);
+    this.handleClick = this.handleClick.bind(this);
 
   }
 
@@ -24,12 +27,20 @@ class App extends React.Component {
       contentType: 'application/JSON',
       data: JSON.stringify({username}),
       method: 'POST',
-      success: this.render,
+      success: data => {
+        if (typeof data === 'string') {
+          alert(`${data} repos from ${username} added to database.`)
+        } else {
+          alert(`Encountered errors when adding repos from ${username}. See console for more details.`)
+          console.log(data);
+        }
+        this.render();
+      }
     } )
   }
 
   render () {
-    $.ajax('/repos',
+    $.ajax(`/repos/${this.state.sortBy}@${this.state.order.toString()}`,
     {
       method: 'GET',
       dataType: 'json',
@@ -43,9 +54,29 @@ class App extends React.Component {
 
     return (<div>
       <h1>Github Fetcher</h1>
-      <RepoList count={this.state.count} repos={this.state.repos}/>
+      <RepoList count={this.state.count} repos={this.state.repos} handleClick={this.handleClick} sortBy={this.state.sortBy} order={this.state.order}/>
       <Search onSearch={this.search.bind(this)}/>
     </div>)
+  }
+
+  handleClick(e) {
+    if (this.state.sortBy === e.target.innerText.toLowerCase()) {
+      this.setState({order: this.state.order * -1});
+    } else {
+      this.setState({sortBy: e.target.innerText.toLowerCase(), order: -1})
+    }
+    $.ajax(`/repos/${this.state.sortBy}@${this.state.order.toString()}`,
+    {
+      method: 'GET',
+      dataType: 'json',
+      success: data => {
+        this.setState({count: data[0], repos: data[1]});
+      },
+      error: (jqxhr, textStatus, errorThrown) => {
+        console.log('render ajax error', textStatus)
+      }
+    })
+
   }
 }
 

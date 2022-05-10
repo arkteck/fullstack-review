@@ -3,21 +3,21 @@ import React from 'react';
 const RepoList = (props) => (
   <div>
     <h4> Repo List Component </h4>
-    There are {props.count} repos. Here are the top 25 based on size.
+    There are {props.count} repos in the databas. Here are the top 25 sorted by {props.sortBy}, {props.order === 1 ? 'ascending' : 'descending'}.
     <table>
       <thead>
       <tr>
-        <th>github_id</th>
-        <th>name</th>
-        <th>username</th>
-        <th>description</th>
-        <th>created_at</th>
-        <th>updated_at</th>
-        <th>size</th>
-        <th>stargazers</th>
-        <th>watchers</th>
-        <th>forks</th>
-        <th>open_issues</th>
+        <th onClick={props.handleClick}>github_id</th>
+        <th onClick={props.handleClick}>name</th>
+        <th onClick={props.handleClick}>username</th>
+        <th onClick={props.handleClick}>description</th>
+        <th onClick={props.handleClick}>created_at</th>
+        <th onClick={props.handleClick}>updated_at</th>
+        <th onClick={props.handleClick}>size</th>
+        <th onClick={props.handleClick}>stargazers</th>
+        <th onClick={props.handleClick}>watchers</th>
+        <th onClick={props.handleClick}>forks</th>
+        <th onClick={props.handleClick}>open_issues</th>
       </tr>
       </thead>
       <tbody>

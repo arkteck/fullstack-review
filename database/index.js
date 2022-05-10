@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-const password = process.env.herokuPW;
-
+// const password = process.env.herokuPW;
+const config = require('../config.js');
+const password = config.herokuPW;
 // mongoose.connect('mongodb://localhost/fetcher');
 mongoose.connect(`mongodb+srv://arkteck:${password}@cluster0.y9iir.mongodb.net/fetcher?retryWrites=true&w=majority`);
 
@@ -46,9 +47,10 @@ let save = (data) => {
   return Repo.insertMany(mongoData, {ordered: false});
 }
 
-let retrieve = () => {
-
-  const promArr = [Repo.estimatedDocumentCount(), Repo.find({}, null, {sort: {size: -1} , limit: 25})];
+let retrieve = (sortBy = 'size', order = -1) => {
+  const sort = {}
+  sort[sortBy] = order;
+  const promArr = [Repo.estimatedDocumentCount(), Repo.find({}, null, {sort, limit: 25})];
   return Promise.all(promArr);
 
 }
