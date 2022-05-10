@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-// const username = process.env.herokuUN;
-// const password = process.env.herokuPW;
-const config = require('../config.js');
-const password = config.herokuPW;
-const username = config.herokuUN;
+const username = process.env.herokuUN;
+const password = process.env.herokuPW;
+// const config = require('../config.js');
+// const password = config.herokuPW;
+// const username = config.herokuUN;
 // mongoose.connect('mongodb://localhost/fetcher');
 mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.y9iir.mongodb.net/fetcher?retryWrites=true&w=majority`);
 
