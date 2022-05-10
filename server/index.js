@@ -10,8 +10,6 @@ app.post('/repos', function (req, res) {
   console.log('get repos of ', req.body.username);
   github.getReposByUsername(req.body.username)
     .then(data => {
-      // comment
-      // res.send(data.length.toString());
       return database.save(data);
     })
     .then((data) => {
@@ -28,7 +26,6 @@ app.post('/repos', function (req, res) {
 
 app.get('/repos', function (req, res) {
 
-  // console.log(req.body.sortBy);
   return database.retrieve()
     .then(data => {
       res.send(data);

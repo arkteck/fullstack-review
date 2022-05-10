@@ -46,6 +46,20 @@ td{
   grid-template-columns: 9fr 1fr;
 }
 
+ul {
+  list-style: none;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  padding: 2px 0;
+}
+
+li img {
+  width: 35px;
+  padding-right: 4px;
+}
 /* demo styles */
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);

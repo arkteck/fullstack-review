@@ -46,7 +46,7 @@ const RepoList = (props) => (
     </table>
     <ul id="userlist">
       {props.users.map(user => (
-        <li>{user.username}</li>
+        <li><img src={user.avatar_url}></img>{user.username}</li>
       ))}
       </ul>
       </div>
