@@ -57,10 +57,10 @@ let save = (data) => {
   })
 
   const userData = {
-    userid = data[0].owner.id,
-    username = data[0].owner.login,
-    user_url = data[0].owner.html_url,
-    avatar_url = data[0].owner.avatar_url,
+    userid : data[0].owner.id,
+    username : data[0].owner.login,
+    user_url : data[0].owner.html_url,
+    avatar_url : data[0].owner.avatar_url,
   };
 
   return User.create(userData)
