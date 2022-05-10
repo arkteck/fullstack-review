@@ -26,5 +26,8 @@
     "mongoose": "^5.10.15",
     "react": "^16.4",
     "react-dom": "^16.4"
+  },
+  "engines": {
+    "node": "16.14.0"
   }
 }
