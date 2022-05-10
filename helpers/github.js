@@ -1,6 +1,5 @@
 const axios = require('axios');
-const config = require('../config.js');
-const TOKEN = process.env.TOKEN || config.TOKEN;
+const TOKEN = process.env.TOKEN;
 
 let getReposByUsername = (username) => {
   // TODO - Use the axios module to request repos for a specific

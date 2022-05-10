@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-const config = require('../config.js');
-const password = process.env.herokuPW || config.herokuPW;
+const password = process.env.herokuPW;
 
 // mongoose.connect('mongodb://localhost/fetcher');
 mongoose.connect(`mongodb+srv://arkteck:${password}@cluster0.y9iir.mongodb.net/fetcher?retryWrites=true&w=majority`);
