@@ -15,10 +15,8 @@ class App extends React.Component {
       order: -1,
     }
     this.render = this.render.bind(this);
-    this.refresh = this.refresh.bind(this);
     this.search = this.search.bind(this);
     this.handleClick = this.handleClick.bind(this);
-
   }
 
   search (username) {
@@ -36,32 +34,28 @@ class App extends React.Component {
           alert(`Encountered errors when adding repos from ${username}. See console for more details.`)
           console.log(data);
         }
-        this.refresh();
+        this.render();
       }
     } )
   }
 
-  refresh () {
+  render () {
     $.ajax(`/repos/${this.state.sortBy}@${this.state.order.toString()}`,
     {
       method: 'GET',
       dataType: 'json',
       success: data => {
         this.setState({users: data[0], count: data[1], repos: data[2]});
-        this.render();
+        return (<div>
+          <h1>Github Fetcher</h1>
+          <RepoList count={this.state.count} repos={this.state.repos} handleClick={this.handleClick} sortBy={this.state.sortBy} order={this.state.order} users={this.state.users}/>
+          <Search onSearch={this.search.bind(this)}/>
+        </div>)
       },
       error: (jqxhr, textStatus, errorThrown) => {
         console.log('refresh ajax error', textStatus)
       }
     })
-  }
-
-  render () {
-    return (<div>
-      <h1>Github Fetcher</h1>
-      <RepoList count={this.state.count} repos={this.state.repos} handleClick={this.handleClick} sortBy={this.state.sortBy} order={this.state.order} users={this.state.users}/>
-      <Search onSearch={this.search.bind(this)}/>
-    </div>)
   }
 
   handleClick(e) {
@@ -75,7 +69,7 @@ class App extends React.Component {
       method: 'GET',
       dataType: 'json',
       success: data => {
-        this.setState({count: data[0], repos: data[1]});
+        this.setState({users: data[0], count: data[1], repos: data[2]});
       },
       error: (jqxhr, textStatus, errorThrown) => {
         console.log('render ajax error', textStatus)
