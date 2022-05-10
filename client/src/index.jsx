@@ -8,7 +8,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: 0,
+      users: [],
       count: 0,
       repos: [],
       sortBy: 'size',

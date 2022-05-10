@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
-const username = process.env.herokuUN;
-const password = process.env.herokuPW;
-// const config = require('../config.js');
-// const password = config.herokuPW;
+// const username = process.env.herokuUN;
+// const password = process.env.herokuPW;
+const config = require('../config.js');
+const password = config.herokuPW;
+const username = config.herokuUN;
 // mongoose.connect('mongodb://localhost/fetcher');
 mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.y9iir.mongodb.net/fetcher?retryWrites=true&w=majority`);
 
@@ -72,7 +73,7 @@ let save = (data) => {
 let retrieve = (sortBy = 'size', order = -1) => {
   const sort = {}
   sort[sortBy] = order;
-  const promArr = [User.estimatedDocumentCount(), Repo.estimatedDocumentCount(), Repo.find({}, null, {sort, limit: 25})];
+  const promArr = [User.find({}), Repo.estimatedDocumentCount(), Repo.find({}, null, {sort, limit: 25})];
   return Promise.all(promArr);
 
 }

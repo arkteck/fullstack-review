@@ -3,8 +3,9 @@ import React from 'react';
 const RepoList = (props) => (
   <div>
     <h4> Repo List Component </h4>
-    There are {props.count} repos by {props.users} users in the database. Here are the top 25 sorted by {props.sortBy}, {props.order === 1 ? 'ascending' : 'descending'}.
-    <table>
+    There are {props.count} repos by {props.users.length} users in the database. Here are the top 25 sorted by {props.sortBy}, {props.order === 1 ? 'ascending' : 'descending'}.
+    <div id="container">
+    <table id="repotable">
       <thead>
       <tr>
         <th onClick={props.handleClick}>github_id</th>
@@ -43,6 +44,12 @@ const RepoList = (props) => (
     })}
     </tbody>
     </table>
+    <ul id="userlist">
+      {props.users.map(user => (
+        <li>{user.username}</li>
+      ))}
+      </ul>
+      </div>
   </div>
 )
 
